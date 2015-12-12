@@ -12,7 +12,6 @@ class YealinkRPS {
 	{
 		self::$CI =& get_instance();
 		self::$CI->load->library('xmlrpc');
-		self::$CI->load->library('xmlrpc-c');
 
 		if(self::$CI->load->config('yealinkrps', TRUE))
 		{
@@ -32,7 +31,7 @@ class YealinkRPS {
 
 	private function __doXMLRPC($method=NULL,$request=NULL)
 	{
-		$xmlURI = str_replace(array('u','p'),array(self::$yeaUsername,self::$yeaPassword),self::$yeaHostname);
+		$xmlURI = str_replace(array('{u}','{p}'),array(self::$yeaUsername,self::$yeaPassword),self::$yeaHostname);
 
 		self::$CI->xmlrpc->server(self::$yeaHostname);
 
@@ -48,25 +47,21 @@ class YealinkRPS {
 			die('YealinkRPS Request Array Missing');
 		}
 
-		$this->xmlrpc->request($request);
+		self::$CI->xmlrpc->request($request);
 
-		if (!$this->xmlrpc->send_request())
+		if (!self::$CI->xmlrpc->send_request())
 		{
-			return $this->xmlrpc->display_error();
+			return self::$CI->xmlrpc->display_error();
 		} else {
-			return $this->xmlrpc->display_response());
+			return self::$CI->xmlrpc->display_response());
 		}
 	}
 
-	public function registerDevice()
+	public function registerDevice($devices=NULL,$server=NULL)
 	{
 	}
 
-	public function deRegisterDevice()
-	{
-	}
-
-	public function listDevices()
+	public function deRegisterDevice($devices=NULL)
 	{
 	}
 
@@ -74,15 +69,15 @@ class YealinkRPS {
 	{
 	}
 
-	public function checkDevice()
+	public function checkDevice($devices=NULL)
 	{
 	}
 
-	public function addServer()
+	public function addServer($server=NULL)
 	{
 	}
 
-	public function editDevice()
+	public function editDevice($devices=NULL,$changes=NULL)
 	{
 	}
 
