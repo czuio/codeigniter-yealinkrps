@@ -57,28 +57,38 @@ class YealinkRPS {
 		}
 	}
 
-	public function registerDevice($devices=NULL,$server=NULL)
+	public function registerDevice($devices=NULL,$server=NULL,$override=TRUE)
 	{
+		$data = array($devices,$server,$override);
+		return self::__doXMLRPC('redirect.registerDevices',$data);
 	}
 
 	public function deRegisterDevice($devices=NULL)
 	{
+                $data = array($devices);
+                return self::__doXMLRPC('redirect.deRegisterDevices',$data);
 	}
 
 	public function listDevices()
 	{
+		return self::__doXMLRPC('redirect.listDevices');
 	}
 
-	public function checkDevice($devices=NULL)
+	public function checkDevice($device=NULL)
 	{
+                $data = array($device);
+                return self::__doXMLRPC('redirect.checkDevice',$data);
 	}
 
-	public function addServer($server=NULL)
+	public function addServer($serverName=NULL,$serverURL=NULL)
 	{
+                $data = array($serverName,$serverURL);
+                return self::__doXMLRPC('redirect.addServer',$data);
 	}
 
-	public function editDevice($devices=NULL,$changes=NULL)
+	public function editDevice($devices=NULL,$serverName=NULL)
 	{
+                $data = array($devices,$serverName);
+                return self::__doXMLRPC('redirect.editDevices',$data);
 	}
-
 }
